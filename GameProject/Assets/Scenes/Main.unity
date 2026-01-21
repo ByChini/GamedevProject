@@ -133,6 +133,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
   m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
+--- !u!114 &401669705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/Jump
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
 --- !u!114 &1351313542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +349,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5857502945704534811, guid: ac3552507b1d9b249b3aad2f0ad7c43b, type: 3}
+      propertyPath: jump
+      value: 
+      objectReference: {fileID: 401669705}
+    - target: {fileID: 5857502945704534811, guid: ac3552507b1d9b249b3aad2f0ad7c43b, type: 3}
       propertyPath: look
       value: 
       objectReference: {fileID: 1351313542}
@@ -347,6 +365,10 @@ PrefabInstance:
       value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 5857502945704534811, guid: ac3552507b1d9b249b3aad2f0ad7c43b, type: 3}
+      propertyPath: _jumpStrengh
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857502945704534811, guid: ac3552507b1d9b249b3aad2f0ad7c43b, type: 3}
       propertyPath: playerPrefab
       value: 
       objectReference: {fileID: 1652943188}
@@ -356,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6092910580061890069, guid: ac3552507b1d9b249b3aad2f0ad7c43b, type: 3}
       propertyPath: m_Constraints
-      value: 80
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 7592969450534011897, guid: ac3552507b1d9b249b3aad2f0ad7c43b, type: 3}
       propertyPath: m_Camera

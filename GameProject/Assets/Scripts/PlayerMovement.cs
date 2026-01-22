@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
 {
     public GameObject playerPrefab;
 
-    public Rigidbody rb;
+    public CharacterController controller;
 
     public InputActionReference move;
     public float moveSpeed;
@@ -16,15 +16,19 @@ public class Player : MonoBehaviour
     private Vector2 _lookDirection;
 
     public InputActionReference jump;
-    public float _jumpStrengh;
+    public float jumpStrengh;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Vector3 velocity;
+    public float gravity;
+    public float friction;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created      
     void Start()
     {
-
+        
     }
 
-    // Update is called once per frame
+    // Update is called once per frame      
     void Update()
     {
         // Rotation
@@ -35,26 +39,46 @@ public class Player : MonoBehaviour
         playerPrefab.transform.rotation = Quaternion.Euler(_lookDirection.x, _lookDirection.y, 0);
 
         // WASD
-        Vector3 currentVelocity = rb.linearVelocity;
-        
-        _moveDirection = move.action.ReadValue<Vector2>();
-        Vector3 horizontalVelocity =             
-            _moveDirection.y * moveSpeed * transform.forward * Time.deltaTime +
-            _moveDirection.x * moveSpeed * transform.right * Time.deltaTime;
+        // Read Input
 
-        rb.linearVelocity = new Vector3(
-            horizontalVelocity.x,
-            currentVelocity.y,
-            horizontalVelocity.z
+        _moveDirection = move.action.ReadValue<Vector2>();             
+        Vector3 horizontalVelocityChange =  
+            _moveDirection.y * moveSpeed * transform.forward +
+            _moveDirection.x * moveSpeed * transform.right;
+
+        float verticalVelocityChange = 0;
+
+        // Apply movement
+        velocity = new Vector3(
+            Mathf.Clamp(velocity.x + horizontalVelocityChange.x, -moveSpeed, moveSpeed),
+            Mathf.Clamp(velocity.y + verticalVelocityChange, gravity, jumpStrengh),
+            Mathf.Clamp(velocity.z + horizontalVelocityChange.z, -moveSpeed, moveSpeed)
         );
 
+        controller.Move(velocity * Time.deltaTime);
 
+        // Apply Physics
+        if (controller.isGrounded) 
+        {
+            velocity.x *= friction * Time.deltaTime;
+            velocity.z *= friction * Time.deltaTime;   
+        } else
+        {
+            velocity.y += gravity * Time.deltaTime;     
+        }
     }
 
+    bool _canJump()
+    {
+        bool _isGrounded = controller.isGrounded;
+        return _isGrounded;
+    }
     void OnJump()
     {
-        rb.linearVelocity = new Vector3 (rb.linearVelocity.x,
-                                        _jumpStrengh,
-                                        rb.linearVelocity.z);
+        if (_canJump())
+        {
+            velocity.y = jumpStrengh;
+        }
+
     }
 }
